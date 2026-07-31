@@ -23,8 +23,7 @@ if showBase:
     plt.plot(h[:, :200], linewidth=0.5)
     plt.title('Displacement as a function of time of Brownian motion')
     plt.xlabel('Time')
-    plt.xlim(left=0)  
-    plt.xlim(right=tMax)
+    plt.xlim(left=0, right=tMax)  
     plt.ylabel('Displacement')
 
     plt.figure('Histogram of Displacement of Unbound Brownian Motion', figsize=(10,6))
@@ -48,8 +47,7 @@ if showBound:
     plt.plot(h_reflect[:, :200], linewidth=0.5)
     plt.title('Displacement as a function of time of Brownian motion')
     plt.xlabel('Time')
-    plt.xlim(left=0)
-    plt.xlim(right=tMax)
+    plt.xlim(left=0, right=tMax)
     plt.ylim(bottom=0)
     plt.ylabel('Displacement')
 
@@ -61,8 +59,7 @@ if showBound:
 
     plt.title('Histograms of Displacement for Brownian particles')
     plt.xlabel('Displacement')
-    plt.xlim(left=0)
-    plt.xlim(right=60)
+    plt.xlim(left=0, right=60)
     plt.ylabel('Number of particles')
     plt.legend()
 
@@ -78,8 +75,7 @@ if showBoundBiased:
     plt.plot(h_final[:, :200], linewidth=0.5)
     plt.title('Displacement as a function of time of Brownian motion')
     plt.xlabel('Time')
-    plt.xlim(left=0)
-    plt.xlim(right=tMax)
+    plt.xlim(left=0, right=tMax)
     plt.ylim(bottom=0)
     plt.ylabel('Displacement')
 
@@ -91,10 +87,28 @@ if showBoundBiased:
 
     plt.title('Histograms of Displacement for Brownian particles')
     plt.xlabel('Displacement')
-    plt.xlim(left=0)
-    plt.xlim(right=60)
+    plt.xlim(left=0, right=60)
     plt.ylabel('Number of particles')
     plt.legend()
+
+plt.figure('Standard Deviation Comparison', figsize=(10,6))
+
+if showBase:
+    plt.plot(np.std(h, axis=1), label='Unbound Brownian Motion')
+
+if showBound:
+    plt.plot(np.std(h_reflect, axis=1), label='Bound (No Gravity)')
+
+if showBoundBiased:
+    plt.plot(np.std(h_final, axis=1), label='Bound + Gravity')
+
+plt.title('Particle Spread ($\sigma$) Over Time (Standard Deviation)')
+plt.xlabel('Time Step')
+plt.ylabel('Standard Deviation ($\sigma$)')
+plt.xlim(left=0, right=tMax)
+plt.ylim(bottom=0)
+plt.legend()
+
 
 plt.show()
 
