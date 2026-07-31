@@ -13,7 +13,7 @@ plt.figure('Displacement of Unbound Brownian Motion', figsize=(10,6))
 plt.plot(h[:, :200], linewidth=0.5)
 plt.title('Displacement as a function of time of Brownian motion')
 plt.xlabel('Time')
-plt.xlim(left=0)
+plt.xlim(left=0)  
 plt.ylabel('Displacement')
 
 
@@ -41,6 +41,8 @@ plt.figure('Displacement of a Bound Brownian Motion', figsize=(10,6))
 plt.plot(h_reflect[:, :200], linewidth=0.5)
 plt.title('Displacement as a function of time of Brownian motion')
 plt.xlabel('Time')
+plt.xlim(left=0)
+plt.ylim(bottom=0)
 plt.ylabel('Displacement')
 
 bins = np.arange(0, 102)
