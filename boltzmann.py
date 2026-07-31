@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 N = 2000
-tMax = 1000
+tMax = 2000
 
 
 forces = np.random.randn(tMax, N)
@@ -14,7 +14,7 @@ plt.plot(h[:, :200], linewidth=0.5)
 plt.title('Displacement as a function of time of Brownian motion')
 plt.xlabel('Time')
 plt.xlim(left=0)  
-plt.xlim(right=1000)
+plt.xlim(right=tMax)
 plt.ylabel('Displacement')
 
 
@@ -43,7 +43,7 @@ plt.plot(h_reflect[:, :200], linewidth=0.5)
 plt.title('Displacement as a function of time of Brownian motion')
 plt.xlabel('Time')
 plt.xlim(left=0)
-plt.xlim(right=2000)
+plt.xlim(right=tMax)
 plt.ylim(bottom=0)
 plt.ylabel('Displacement')
 
@@ -56,9 +56,9 @@ for t, label in zip(times_to_plot, labels):
 plt.title('Histograms of Displacement for Brownian particles')
 plt.xlabel('Displacement')
 plt.xlim(left=0)
+plt.xlim(right=60)
 plt.ylabel('Number of particles')
 plt.legend()
-
 
 
 plt.show()
