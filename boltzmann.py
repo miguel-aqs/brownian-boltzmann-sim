@@ -4,8 +4,11 @@ import matplotlib.pyplot as plt
 tMax = 2000
 N = 1000
 dh = -0.05
+initialH = 5
 
-showBase = True
+#note that initialH is only for showBound and showBoundBiased since showBase starts at 0
+
+showBase = False
 showBound = True
 showBoundBiased = True
 showStDev = True
@@ -38,7 +41,7 @@ if showBase:
 
 if showBound:
     h_reflect = np.zeros((tMax,N))
-    h_reflect[0, :] = 5
+    h_reflect[0, :] = initialH
 
     for t in range(1,tMax):
         step = np.random.randn(N)
@@ -66,7 +69,7 @@ if showBound:
 
 if showBoundBiased:
     h_final = np.zeros((tMax,N))
-    h_final[0, :] = 5
+    h_final[0, :] = initialH
 
     for t in range(1,tMax):
         step = np.random.randn(N)
