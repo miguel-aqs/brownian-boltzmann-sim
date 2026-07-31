@@ -10,6 +10,7 @@ This project is built using standard Python and requires the following external 
 * **Matplotlib** (for plotting trajectories and histograms)
 
 ## Features
+Each part is toggleable to view one or multiple at the same time.
 * **Part 1:** Unbound Brownian motion (random walk).
 * **Part 2:** Introduction of a reflecting boundary ($h=0$).
-* **Part 3:** (In Progress) Addition of gravitational drift to achieve steady-state Boltzmann distribution.
+* **Part 3:** Addition of gravitational drift to achieve steady-state Boltzmann distribution.

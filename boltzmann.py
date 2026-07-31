@@ -1,65 +1,100 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-N = 2000
 tMax = 2000
+N = 1000
+dh = -0.05
+
+showBase = False
+showBound = True
+showBoundBiased = True
 
 
 forces = np.random.randn(tMax, N)
 
 h = np.cumsum(forces, axis=0)
 
-plt.figure('Displacement of Unbound Brownian Motion', figsize=(10,6))
-plt.plot(h[:, :200], linewidth=0.5)
-plt.title('Displacement as a function of time of Brownian motion')
-plt.xlabel('Time')
-plt.xlim(left=0)  
-plt.xlim(right=tMax)
-plt.ylabel('Displacement')
-
-
 times_to_plot = [4, 9, 19, 49, 99]
 labels = ['t=5', 't=10', 't=20', 't=50', 't=100']
 bins = np.arange(-50, 52)
 
-plt.figure('Histogram of Displacement of Unbound Brownian Motion', figsize=(10,6))
-for t, label in zip(times_to_plot, labels):
-    plt.hist(h[t, :], bins=bins, histtype='step', label=label)
+if showBase:
+    plt.figure('Displacement of Unbound Brownian Motion', figsize=(10,6))
+    plt.plot(h[:, :200], linewidth=0.5)
+    plt.title('Displacement as a function of time of Brownian motion')
+    plt.xlabel('Time')
+    plt.xlim(left=0)  
+    plt.xlim(right=tMax)
+    plt.ylabel('Displacement')
 
-plt.title('Histograms of Displacement for Brownian particles')
-plt.xlabel('Displacement')
-plt.ylabel('Number of particles')
-plt.legend()
+    plt.figure('Histogram of Displacement of Unbound Brownian Motion', figsize=(10,6))
+    for t, label in zip(times_to_plot, labels):
+        plt.hist(h[t, :], bins=bins, histtype='step', label=label)
 
-h_reflect = np.zeros((2000,1000))
-h_reflect[0, :] = 5
+    plt.title('Histograms of Displacement for Brownian particles')
+    plt.xlabel('Displacement')
+    plt.ylabel('Number of particles')
+    plt.legend()
 
-for t in range(1,2000):
-    step = np.random.randn(1000)
-    h_reflect[t, :] = abs(h_reflect[t-1, :] + step)
+if showBound:
+    h_reflect = np.zeros((tMax,N))
+    h_reflect[0, :] = 5
 
-plt.figure('Displacement of a Bound Brownian Motion', figsize=(10,6))
-plt.plot(h_reflect[:, :200], linewidth=0.5)
-plt.title('Displacement as a function of time of Brownian motion')
-plt.xlabel('Time')
-plt.xlim(left=0)
-plt.xlim(right=tMax)
-plt.ylim(bottom=0)
-plt.ylabel('Displacement')
+    for t in range(1,tMax):
+        step = np.random.randn(N)
+        h_reflect[t, :] = abs(h_reflect[t-1, :] + step)
 
-bins = np.arange(0, 102)
+    plt.figure('Displacement of a Bound Brownian Motion', figsize=(10,6))
+    plt.plot(h_reflect[:, :200], linewidth=0.5)
+    plt.title('Displacement as a function of time of Brownian motion')
+    plt.xlabel('Time')
+    plt.xlim(left=0)
+    plt.xlim(right=tMax)
+    plt.ylim(bottom=0)
+    plt.ylabel('Displacement')
 
-plt.figure('Histogram of Displacement of Bound Brownian Motion', figsize=(10,6))
-for t, label in zip(times_to_plot, labels):
-    plt.hist(h_reflect[t, :], bins=bins, histtype='step', label=label)
+    bins = np.arange(0, 102)
 
-plt.title('Histograms of Displacement for Brownian particles')
-plt.xlabel('Displacement')
-plt.xlim(left=0)
-plt.xlim(right=60)
-plt.ylabel('Number of particles')
-plt.legend()
+    plt.figure('Histogram of Displacement of Bound Brownian Motion', figsize=(10,6))
+    for t, label in zip(times_to_plot, labels):
+        plt.hist(h_reflect[t, :], bins=bins, histtype='step', label=label)
 
+    plt.title('Histograms of Displacement for Brownian particles')
+    plt.xlabel('Displacement')
+    plt.xlim(left=0)
+    plt.xlim(right=60)
+    plt.ylabel('Number of particles')
+    plt.legend()
+
+if showBoundBiased:
+    h_final = np.zeros((tMax,N))
+    h_final[0, :] = 5
+
+    for t in range(1,tMax):
+        step = np.random.randn(N)
+        h_final[t, :] = abs(h_final[t-1, :] + step + dh)
+
+    plt.figure('Displacement of a Biased Bound Brownian Motion', figsize=(10,6))
+    plt.plot(h_final[:, :200], linewidth=0.5)
+    plt.title('Displacement as a function of time of Brownian motion')
+    plt.xlabel('Time')
+    plt.xlim(left=0)
+    plt.xlim(right=tMax)
+    plt.ylim(bottom=0)
+    plt.ylabel('Displacement')
+
+    bins = np.arange(0, 102)
+
+    plt.figure('Histogram of Displacement of Biased Bound Brownian Motion', figsize=(10,6))
+    for t, label in zip(times_to_plot, labels):
+        plt.hist(h_final[t, :], bins=bins, histtype='step', label=label)
+
+    plt.title('Histograms of Displacement for Brownian particles')
+    plt.xlabel('Displacement')
+    plt.xlim(left=0)
+    plt.xlim(right=60)
+    plt.ylabel('Number of particles')
+    plt.legend()
 
 plt.show()
 
