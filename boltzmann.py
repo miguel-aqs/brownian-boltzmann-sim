@@ -21,7 +21,7 @@ showIsotopeSim = True
 
 forces = np.random.randn(tMax, N)
 
-h = np.cumsum(forces, axis=0)
+h = np.cumsum(forces, axis=0) 
 
 times_to_plot = [4, 9, 19, 49, 99]
 labels = ['t=5', 't=10', 't=20', 't=50', 't=100']
@@ -147,6 +147,20 @@ if showIsotopeSim:
     plt.title('Vertical Atmospheric Spread ($\sigma$) of Water Isotopes Across Climates')
     plt.xlabel('Time Step')
     plt.ylabel('Standard Deviation ($\sigma$)')
+    plt.xlim(left=0, right=tMax)
+    plt.ylim(bottom=0)
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+
+    plt.figure('Climate Isotope Comparison (Mean)', figsize=(10, 6))
+    plt.plot(np.mean(h_O16_warm, axis=1), label='H2(16O) - Warm (300K)', color='red')
+    plt.plot(np.mean(h_O18_warm, axis=1), label='H2(18O) - Warm (300K)', color='orange')
+    plt.plot(np.mean(h_O16_cold, axis=1), label='H2(16O) - Cold (260K)', color='cyan')
+    plt.plot(np.mean(h_O18_cold, axis=1), label='H2(18O) - Cold (260K)', color='blue')
+
+    plt.title('Vertical Atmospheric Spread ($\sigma$) of Water Isotopes Across Climates')
+    plt.xlabel('Time Step')
+    plt.ylabel('Mean')
     plt.xlim(left=0, right=tMax)
     plt.ylim(bottom=0)
     plt.legend()
