@@ -158,7 +158,7 @@ if showIsotopeSim:
     plt.plot(np.mean(h_O16_cold, axis=1), label='H2(16O) - Cold (260K)', color='cyan')
     plt.plot(np.mean(h_O18_cold, axis=1), label='H2(18O) - Cold (260K)', color='blue')
 
-    plt.title('Vertical Atmospheric Spread ($\sigma$) of Water Isotopes Across Climates')
+    plt.title('Mean Vertical Atmospheric Spread of Water Isotopes Across Climates')
     plt.xlabel('Time Step')
     plt.ylabel('Mean')
     plt.xlim(left=0, right=tMax)
