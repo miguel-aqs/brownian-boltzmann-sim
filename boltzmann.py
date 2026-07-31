@@ -4,11 +4,19 @@ import matplotlib.pyplot as plt
 tMax = 2000
 N = 1000
 dh = -0.05
+initialH = 5 #note that initialH is only for showBound and showBoundBiased since showBase starts at 0
 
-showBase = True
+#molar masses and kelvin
+m_O16 = 18.0
+m_O18 = 20.0
+T_cold = 260
+T_warm = 300
+
+showBase = False
 showBound = True
 showBoundBiased = True
 showStDev = True
+showIsotopeSim = True
 
 
 forces = np.random.randn(tMax, N)
@@ -38,7 +46,7 @@ if showBase:
 
 if showBound:
     h_reflect = np.zeros((tMax,N))
-    h_reflect[0, :] = 5
+    h_reflect[0, :] = initialH
 
     for t in range(1,tMax):
         step = np.random.randn(N)
@@ -66,7 +74,7 @@ if showBound:
 
 if showBoundBiased:
     h_final = np.zeros((tMax,N))
-    h_final[0, :] = 5
+    h_final[0, :] = initialH
 
     for t in range(1,tMax):
         step = np.random.randn(N)
@@ -111,6 +119,38 @@ if showStDev:
     plt.ylim(bottom=0)
     plt.legend()
 
+if showIsotopeSim:
+    def run_isotope_sim(mass, temp, tMax=2000, N=1000):
+        step_scale = np.sqrt(temp / mass) * 0.1   
+        dh = -(mass / temp) * 0.5                  
+    
+        h_sim = np.zeros((tMax, N))
+        h_sim[0, :] = 5.0  
+    
+        for t in range(1, tMax):
+            step = np.random.randn(N) * step_scale
+            h_sim[t, :] = np.abs(h_sim[t-1, :] + step + dh)
+        
+        return h_sim
+    
+    h_O16_cold = run_isotope_sim(m_O16, T_cold)
+    h_O18_cold = run_isotope_sim(m_O18, T_cold)
+    h_O16_warm = run_isotope_sim(m_O16, T_warm)
+    h_O18_warm = run_isotope_sim(m_O18, T_warm)
+
+    plt.figure('Climate Isotope Spread Comparison (Standard Deviation)', figsize=(10, 6))
+    plt.plot(np.std(h_O16_warm, axis=1), label='H2(16O) - Warm (300K)', color='red')
+    plt.plot(np.std(h_O18_warm, axis=1), label='H2(18O) - Warm (300K)', color='orange')
+    plt.plot(np.std(h_O16_cold, axis=1), label='H2(16O) - Cold (260K)', color='cyan')
+    plt.plot(np.std(h_O18_cold, axis=1), label='H2(18O) - Cold (260K)', color='blue')
+
+    plt.title('Vertical Atmospheric Spread ($\sigma$) of Water Isotopes Across Climates')
+    plt.xlabel('Time Step')
+    plt.ylabel('Standard Deviation ($\sigma$)')
+    plt.xlim(left=0, right=tMax)
+    plt.ylim(bottom=0)
+    plt.legend()
+    plt.grid(True, alpha=0.3)
 
 plt.show()
 
